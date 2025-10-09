@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "884014883885",
+    "firebase_url": "https://e-learning-10cbb-default-rtdb.firebaseio.com",
+    "project_id": "e-learning-10cbb",
+    "storage_bucket": "e-learning-10cbb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884014883885:android:8c630fefcd27d0b28604a4",
+        "android_client_info": {
+          "package_name": "com.yourname.myflutterapp.my_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfeGkjTa1l66Tk8ntYzoBe2viWO1r4vMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
