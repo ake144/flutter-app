@@ -455,9 +455,17 @@
 //   }
 // }
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_app/config/database_service.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
+import 'package:http/http.dart' as http;
+import 'package:faker/faker.dart';
+
+
 
 class FormSection extends StatefulWidget {
   const FormSection({super.key});
@@ -469,11 +477,27 @@ class FormSection extends StatefulWidget {
 }
 
 class _FormSectionState extends State<FormSection>{
+
+  late Future<int>  dataFuture;
+
   @override
+  void initState(){
+    super.initState();
+    dataFuture = getData();
+  }
+
+
+
+
+  
+@override
 Widget build(BuildContext context){
+  var faker = new Faker();
+
+
   return Scaffold(
     appBar: AppBar(
-      title: const Text('Quiz App with BLoC'),
+      title: Text('Quiz App with BLoC by ${faker.person.name()}'),
     ),
     body: Column(
       children: [
@@ -505,10 +529,71 @@ Widget build(BuildContext context){
             // Handle button press
           },
         ),  
-      
+      SizedBox(height: 20),
+      ButtonWidget(
+          label: "Contact Support",
+          callback: () {
+            _sendEmail(faker.internet.email());
+          },
+        ),
+      SizedBox(height: 20),
+      ButtonWidget(label: "send SMS", callback: () {
+        _sendSms(faker.phoneNumber.us());
+      }),
+      SizedBox(height: 20),
+      ElevatedButton(onPressed: (){
+        WakelockPlus.enable();
+      },
+       child: const Text("Wakelock Enable")),
+      SizedBox(height: 20),
+      ElevatedButton(onPressed: (){
+        WakelockPlus.disable();
+      },
+       child: const Text("Wakelock Disable")) 
       ],
     ),
-    
+    drawer: Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'Navigation Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.contact_mail),
+            title: const Text('Contact Us'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    floatingActionButton: buildSpeedDial(),
   );
 }
 
@@ -527,4 +612,76 @@ class ButtonWidget extends StatelessWidget {
       child: Text(label),
     );
   }
+}
+
+Future<int>  getData() async{
+    final result  = await http.get(
+      Uri.parse('https://randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=1'),
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+
+    final body = json.decode(result.body);
+
+    print('Result: $body');
+
+    int randomNumber = (body as List).first;
+
+    return randomNumber;
+}
+
+
+ 
+Future<void> _sendEmail(String email) async {
+  var _url = Uri.parse("mailto:$email");
+
+   if (await canLaunchUrl(_url)) {
+     await launchUrl(_url, mode: LaunchMode.externalApplication);
+   } else {
+     throw 'Could not launch $_url';
+   }
+}
+
+Future<void> _sendSms(String phoneNumber) async {
+    var _url = Uri.parse("sms:$phoneNumber");
+    if (await canLaunchUrl(_url)) {
+      await launchUrl(_url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $_url';
+    }
+}
+
+SpeedDial buildSpeedDial(){
+  return SpeedDial(
+     animatedIcon: AnimatedIcons.menu_close,
+     animatedIconTheme: IconThemeData(size: 22.0),
+     backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+     visible: true,
+     curve: Curves.bounceInOut,
+     children: [
+        SpeedDialChild(
+           child: Icon(Icons.message),
+           backgroundColor: Colors.red,
+            label: 'Message',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => print('Message Tapped'),
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.email),
+          backgroundColor: Colors.green,
+          label: 'Email',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => print('Email Tapped'),
+        ),
+        SpeedDialChild(
+          backgroundColor:Colors.orange ,
+          child: Icon(Icons.phone),
+          label: 'Phone',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => print('Phone Tapped'),
+          )
+     ],
+  
+  );
 }
