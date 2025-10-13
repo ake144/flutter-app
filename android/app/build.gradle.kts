@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.my_flutter_app"
+    namespace = "com.yourname.myflutterapp.my_flutter_app"
     compileSdk = 35
 
     defaultConfig {
