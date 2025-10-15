@@ -19,7 +19,6 @@ class TabsDemo extends StatelessWidget {
      return MaterialApp(
 
        debugShowCheckedModeBanner: false,
-       title: 'Grid view demo',
        theme: ThemeData(
          primarySwatch: Colors.blue
         ),
@@ -114,8 +113,9 @@ class TabsDemo extends StatelessWidget {
       //     ),
       //   )
       //  )
-     );
-   }
+           );
+      
+  }
 }
      
 
@@ -158,17 +158,54 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Staggered Grid View'),
+        title: const Text('Portfolio page'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StaggeredGrid.count(
-          crossAxisCount: 4,
-          mainAxisSpacing: 2,
-          crossAxisSpacing: 2,
-          children: _cards,
-        )
-      )
+      body: 
+           Container(
+             alignment: Alignment.center,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                 children: [
+                   const Text(
+                    "Welcome to Akanji Hero Section",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                   )
+                   ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: Image(image:   AssetImage('images/photo.jpg',), fit: BoxFit.cover,),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: MasonryGridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4,
+                        itemCount: _cards.length,
+                        itemBuilder: (context, index) {
+                          return _cards[index];
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "This is a simple Flutter application demonstrating a staggered grid view layout. The grid items are displayed in a masonry style, allowing for a dynamic and visually appealing arrangement of content.",
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: (){
+
+                      },
+                      child: const Text("Contact Me"),
+                    ),
+                 ],
+              ),
+           )
     );
   }
 }
