@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
       const  LoginScreen({super.key}); 
@@ -39,13 +40,15 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: (){
-
+                  onPressed: () {
+                    GoRouter.of(context).go('/');
                   },
                   child: const Text('Login'),
                 ),
                 SizedBox(height: 16.0),
-                TextButton(onPressed: (){},
+                TextButton(onPressed: (){
+                  context.go('/login');
+                },
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.fromLTRB(25, 2, 0, 2),
                   foregroundColor: Colors.blue,

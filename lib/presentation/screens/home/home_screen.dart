@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,6 +42,7 @@ class HomeScreen extends StatelessWidget {
                           itemCount: Courses.length,
                           itemBuilder: (context, index) =>
                               Card(
+                                
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -48,15 +50,16 @@ class HomeScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                                      child: Image.asset(
-                                        Courses[index]['image']!,
-                                        height: 100,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                    // ClipRRect(
+                                    //   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                                    //   child: Image.asset(
+                                    //     Courses[index]['image']!,
+                                    //     height: 100,
+                                    //     width: double.infinity,
+                                    //     fit: BoxFit.cover,
+                                        
+                                    //   ),
+                                    // ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -69,6 +72,15 @@ class HomeScreen extends StatelessWidget {
                                       child: Text(
                                         Courses[index]['description']!,
                                         style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        context.push( '/course/${Courses[index]['id']}');
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        color: Colors.transparent,
                                       ),
                                     ),
                                   ],
@@ -88,18 +100,21 @@ class HomeScreen extends StatelessWidget {
 
 final Courses = [
   {
+    "id": '1',
     'title': 'Flutter for Beginners',
     'description': 'Learn the basics of Flutter development.',
     'image': 'assets/flutter_course.png',
   },
   {
-    'title': 'Advanced Dart Programming',
-    'description': 'Deep dive into Dart programming language.',
-    'image': 'assets/dart_course.png',
+    "id": '2',
+    "title": 'Advanced Dart Programming',
+    "description": 'Deep dive into Dart programming language.',
+    "image": 'assets/dart_course.png',
   },
   {
-    'title': 'UI/UX Design Principles',
-    'description': 'Understand the fundamentals of UI/UX design.',
+    "id": '3',
+    "title": 'UI/UX Design Principles',
+    "description": 'Understand the fundamentals of UI/UX design.',
     'image': 'assets/uiux_course.png',
   },
 ];

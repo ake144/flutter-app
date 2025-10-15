@@ -19,7 +19,7 @@ class CourseDetailScreen extends StatelessWidget   {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Course Title: ${CourseList.firstWhere((course) => course['title'] == courseId)['title']}',
+                'Course Title: ${CourseList.firstWhere((course) => course['id'] == courseId)['title']}',
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
@@ -61,6 +61,7 @@ class CourseDetailScreen extends StatelessWidget   {
 
 final CourseList = [
   {
+    "id": '1',
     'title': 'Flutter for Beginners',
     'description': 'Learn the basics of Flutter development.',
     'instructor': 'John Doe',
@@ -68,6 +69,7 @@ final CourseList = [
     'imageUrl': 'https://example.com/flutter_course.jpg',
   },
   {
+    "id": '2',
     'title': 'Advanced Dart Programming',
     'description': 'Deep dive into Dart programming language.',
     'instructor': 'Jane Smith',
@@ -75,6 +77,7 @@ final CourseList = [
     'imageUrl': 'https://example.com/dart_course.jpg',
   },
   {
+    "id": '3',
     'title': 'State Management in Flutter',
     'description': 'Explore various state management techniques in Flutter.',
     'instructor': 'Alice Johnson',

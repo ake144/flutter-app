@@ -9,7 +9,7 @@ import 'package:my_flutter_app/presentation/screens/home/home_screen.dart';
 
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/login',
   routes: [
     GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
     GoRoute(path: '/login', builder: (context, state) =>  const LoginScreen()),
