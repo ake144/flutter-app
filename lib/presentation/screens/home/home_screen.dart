@@ -9,112 +9,135 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Learning App Home'),
+        backgroundColor: Colors.blueAccent,
+        elevation: 0,
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-               child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Text(
-                     'Welcome to the Learning App',
-                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                   ),
-                   SizedBox(height: 16),
-                   Text(
-                     'Explore a variety of courses to enhance your skills.',
-                     style: TextStyle(fontSize: 16),
-                   ),
-                    SizedBox(height: 24),
-                    GridPaper(
-                        color: Colors.blue,
-                        interval: 200,
-                        divisions: 2,
-                        subdivisions: 1,
-                        child: Container(height: 500, width: double.infinity,
-                          color: Colors.amber,
-                        child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 8,
-                            crossAxisSpacing: 8,
-                            childAspectRatio: 0.75,
-                          ),
-                          itemCount: Courses.length,
-                          itemBuilder: (context, index) =>
-                              Card(
-                                
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // ClipRRect(
-                                    //   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                                    //   child: Image.asset(
-                                    //     Courses[index]['image']!,
-                                    //     height: 100,
-                                    //     width: double.infinity,
-                                    //     fit: BoxFit.cover,
-                                        
-                                    //   ),
-                                    // ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        Courses[index]['title']!,
-                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(
-                                        Courses[index]['description']!,
-                                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        context.push( '/course/${Courses[index]['id']}');
-                                      },
-                                      child: Container(
-                                        height: 100,
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                        )
-                        ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Welcome to the Learning App',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Discover courses designed to help you grow your skills and reach new heights.',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+                    const SizedBox(height: 24),
 
-                    )
-                 ],
-               ),
-             )
-    );
+                    // Properly wrapped GridView
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.8,
+                          ),
+                      itemCount: courses.length,
+                      itemBuilder: (context, index) {
+                        final course = courses[index];
+                        return InkWell(
+                          onTap: () => context.push('/course/${course['id']}'),
+                          borderRadius: BorderRadius.circular(12),
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Colors.blue.shade50,
+                                    child: const Icon(
+                                      Icons.menu_book,
+                                      size: 48,
+                                      color: Colors.blueAccent,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      
+                                      children: [
+                                        Text(
+                                          course['title']!,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        // Text(
+                                        //   course['description']!,
+                                        //   style: TextStyle(
+                                        //     fontSize: 14,
+                                        //     color: Colors.grey[700],
+                                        //   ),
+                                        //   maxLines: 3,
+                                        //   overflow: TextOverflow.ellipsis,
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
   }
 }
 
-
-final Courses = [
+// Dummy course list
+final courses = [
   {
-    "id": '1',
+    'id': '1',
     'title': 'Flutter for Beginners',
-    'description': 'Learn the basics of Flutter development.',
+    'description':
+        'Learn how to build your first mobile app using Flutter and Dart.',
     'image': 'assets/flutter_course.png',
   },
   {
-    "id": '2',
-    "title": 'Advanced Dart Programming',
-    "description": 'Deep dive into Dart programming language.',
-    "image": 'assets/dart_course.png',
+    'id': '2',
+    'title': 'Advanced Dart Programming',
+    'description':
+        'Master advanced Dart concepts to write efficient and clean code.',
+    'image': 'assets/dart_course.png',
   },
   {
-    "id": '3',
-    "title": 'UI/UX Design Principles',
-    "description": 'Understand the fundamentals of UI/UX design.',
+    'id': '3',
+    'title': 'UI/UX Design Principles',
+    'description':
+        'Understand what makes great user interfaces and user experiences.',
     'image': 'assets/uiux_course.png',
+  },
+  {
+    'id': '4',
+    'title': 'State Management in Flutter',
+    'description':
+        'Get hands-on with Provider, Riverpod, and Bloc for app state management.',
+    'image': 'assets/state_management.png',
   },
 ];
