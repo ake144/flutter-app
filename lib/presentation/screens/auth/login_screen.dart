@@ -1,80 +1,134 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_flutter_app/data/repositories/auths_repository.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'dart:io';
 
-class LoginScreen extends StatelessWidget {
+import 'package:my_flutter_app/presentation/widgets/nav_bar.dart';
+
+class LoginScreen extends StatefulWidget {
       const  LoginScreen({super.key}); 
 
 
-     @override
+      @override
+  State<LoginScreen> createState() => _loginScreenState();  
+}
+
+
+
+  class _loginScreenState extends State<LoginScreen>{   
+     TextEditingController phoneController = TextEditingController();
+     
+     TextEditingController usernameController = TextEditingController();
+     TextEditingController passwordController = TextEditingController();
+
+
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
        appBar: AppBar(
-        title: const Text('Login Screen', style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+        title: const Text('Login Screen', style: TextStyle(color: Colors.white), textAlign: TextAlign.center),
+         backgroundColor: Colors.blueAccent, 
        ),
-        
+       drawer: const NavBar(),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Wellcome! Please log in.', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 2.0),
-                child: TextField(
-                  style: const TextStyle(color: Colors.blue, fontStyle: FontStyle.italic),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(9.0),
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Wellcome! Please log in.', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), ),
+                SizedBox(height: 24.0),
+                TextField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
                     labelText: 'Username',
-                    prefixIcon: const Icon(Icons.person),
-                  ),
-                ),
-              ),
-                SizedBox(height: 16.0),
-              
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24.0, 2.0, 24.0, 2.0),
-                child: TextField(
-                  decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     ),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),  
+                SizedBox(height: 16.0),
+                TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
                     labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    ),
                   ),
                   obscureText: true,
-                )
-                 ),
-
-                SizedBox(height: 24.0),
+                ),
+                SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
-                    GoRouter.of(context).go('/');
+                     final username = usernameController.text.trim();
+                    final password = passwordController.text.trim();
+                    LoginRepository.LoginUser(context, username, password);
+                    
                   },
                   child: const Text('Login'),
                 ),
                 SizedBox(height: 16.0),
-                TextButton(onPressed: (){
-                  context.go('/login');
-                },
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(25, 2, 0, 2),
-                  foregroundColor: Colors.blue,
-                ),
-                child: OutlinedButton(
+                ElevatedButton(
                   onPressed: () {
                     context.go('/signup');
                   },
-                  child: const Text('don\'t have an account? Sign up'),
+                  child: const Text('Do not have an account? Sign Up'),
                 ),
+                SizedBox(height: 16.0),
+                // TextField(
+                //   controller: phoneController,
+                   
+                //   decoration: const InputDecoration(
+                //     labelText: 'Phone Number',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                //     ),
+                //   ),
+                //   maxLength: 12,
+                //   keyboardType: TextInputType.number,
+                //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                // ),
+                // const SizedBox(height: 16.0),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     final raw = phoneController.text.trim();
+                //     final digits = raw.replaceAll(RegExp(r'\D'), '');
+
+                //     if (digits.length == 12) {
+                //       final e164 = '+$digits';
+                //       AuthRepository.verifyPhoneNumber(context, e164);
+                //     } else {
+                //       ScaffoldMessenger.of(context).showSnackBar(
+                //         const SnackBar(content: Text('Please enter a valid 12-digit phone number.')),
+                //       );
+                //     }
+                //   },
+                //   child: const Text('Login'),
+                // ),
+              ]
               ),
 
-            ],
+            
           )
+        
         ),
 
     );
   }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
+  }
+
+
+
 }

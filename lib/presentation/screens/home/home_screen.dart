@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_flutter_app/presentation/widgets/nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,13 +13,13 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
+      drawer: const NavBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Welcome to the Learning App',
+                    const Text('Welcome to the Learning App',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -106,7 +107,10 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            );
+        
+    );
+
+
   }
 }
 
