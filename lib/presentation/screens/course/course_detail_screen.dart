@@ -10,7 +10,7 @@ class CourseDetailScreen extends StatelessWidget   {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> course = CourseList.firstWhere((course) => course['id'] == courseId);
+    final Map<String, String> course = courseList.firstWhere((course) => course['id'] == courseId);
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +73,7 @@ class CourseDetailScreen extends StatelessWidget   {
 }
 
 
-final CourseList = [
+final courseList = [
   {
     "id": '1',
     'title': 'Flutter for Beginners',

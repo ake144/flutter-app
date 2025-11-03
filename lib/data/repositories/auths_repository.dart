@@ -33,8 +33,8 @@ class LoginRepository {
      context.go('/');
 
     } else {
-      print('Login error');
-      // Handle error (body contains error details)
+       print('Login error');
+
     }
     client.close();
   } catch (e) {

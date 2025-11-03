@@ -38,7 +38,8 @@ class AuthBloc  extends Bloc<AuthEvent, AuthState> {
         await _storage.write(key: 'token', value: token);
 
         emit(state.copyWith(
-            isAuthenticated: true,  token: token));
+            isAuthenticated: true, 
+             token: token));
       } else {
         emit(state.copyWith(
             isAuthenticated: false,
