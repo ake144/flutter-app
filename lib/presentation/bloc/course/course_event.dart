@@ -11,7 +11,6 @@ class LoadCourses extends CourseEvent {
   
 }
 
-
 class SelectedCourse extends CourseEvent {
   final String courseId;
 
