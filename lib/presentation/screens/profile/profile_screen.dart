@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_event.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_state.dart';
+import 'package:my_flutter_app/presentation/widgets/nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('Profile', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blueAccent,
       ),
+       drawer: const NavBar(),
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (!state.isAuthenticated) {
@@ -24,12 +26,14 @@ class ProfileScreen extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                const CircleAvatar(
-                  radius: 50,
+            child: Center(
+              
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  const CircleAvatar(
+                    radius: 50,
                   backgroundColor: Colors.blueAccent,
                   child: Icon(Icons.person, size: 50, color: Colors.white),
                 ),
@@ -55,6 +59,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
+            )
           );
         },
       ),

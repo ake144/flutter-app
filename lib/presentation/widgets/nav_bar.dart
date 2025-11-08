@@ -36,6 +36,15 @@ class NavBar extends StatelessWidget {
               context.go('/courses');
             },
           ),
+
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: () {
+              context.go('/profile');
+            },
+          ),
+          
           
           ListTile(
             leading: const Icon(Icons.login),

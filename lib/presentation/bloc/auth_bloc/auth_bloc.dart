@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 import 'dart:convert';
@@ -9,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class AuthBloc  extends Bloc<AuthEvent, AuthState> {
   final _storage = const FlutterSecureStorage();
-  final String backendUrl = 'http://localhost:3000';
+    final backendUrl = dotenv.env['API_URL'] ?? "http://localhost:3000";
 
   AuthBloc() : super(AuthState.initial()) {
     on<AuthLoginRequested>(_onLoginRequested);
@@ -37,8 +39,17 @@ class AuthBloc  extends Bloc<AuthEvent, AuthState> {
         final token = data['access_token'];
         await _storage.write(key: 'token', value: token);
 
+         final Map<String,dynamic> decoded = JwtDecoder.decode(token);
+
+          print('Decoded JWT: $decoded  ${decoded['username']}');
+         final  username = decoded['username'];
+         final email = decoded['email'];
+        
+
         emit(state.copyWith(
-            isAuthenticated: true, 
+            isAuthenticated: true,
+            email: email,
+            username: username,
              token: token));
       } else {
         emit(state.copyWith(

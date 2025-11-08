@@ -4,12 +4,14 @@ class AuthState extends Equatable {
    final bool isAuthenticated;
    final String email;
    final String? token;
+    final String username;
    final String? errorMessage;
 
   const  AuthState({
      required this.isAuthenticated,
      required this.email,
      required this.token,
+     required this.username,
      required this.errorMessage,
    });
  
@@ -18,6 +20,7 @@ class AuthState extends Equatable {
          isAuthenticated: false,
          email: '',
          token: null,
+         username: '',
          errorMessage: null,
        );
 
@@ -25,12 +28,14 @@ class AuthState extends Equatable {
      bool? isAuthenticated,
      String? email,
      String? token,
+      String? username,
      String? errorMessage,
    }) {
       return AuthState(
        isAuthenticated: isAuthenticated ?? this.isAuthenticated,
        email: email ?? this.email,
        token: token ?? this.token,
+       username: username ?? this.username,
        errorMessage: errorMessage ?? this.errorMessage,
      );
    }
