@@ -44,7 +44,13 @@ class NavBar extends StatelessWidget {
               context.go('/profile');
             },
           ),
-          
+          ListTile(
+            leading: const Icon(Icons.chat),
+            title: const Text('Chat'),
+            onTap: (){
+               context.go('/chat');
+            },
+          ),
           
           ListTile(
             leading: const Icon(Icons.login),

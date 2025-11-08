@@ -7,6 +7,7 @@ import 'package:my_flutter_app/presentation/screens/course/course_detail_screen.
 import 'package:my_flutter_app/presentation/screens/home/course_list_tile.dart';
 import 'package:my_flutter_app/presentation/screens/home/home_screen.dart';
 import 'package:my_flutter_app/presentation/screens/profile/profile_screen.dart';
+import 'package:my_flutter_app/presentation/widgets/chat/pages/chat_page.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -35,6 +36,11 @@ final appRouter = GoRouter(
       path: '/otp',
       name: 'otp-screen',
       builder: (context, state) => const OtpScreen(),
+    ),
+    GoRoute(
+      path: '/chat',
+      name: 'chat-screen',
+      builder: (context, state) => const ChatPage(),
     ),
     GoRoute(
       path: '/course/:id',
