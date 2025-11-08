@@ -56,6 +56,16 @@ static String get backendUrl => dotenv.env['API_URL'] ?? 'http://localhost:3000'
     });
   }
 
+  void listenToMessageHistory(Function(List<dynamic> data) calledBack) {
+    socket.on('messageHistory', (data) {
+      print('Received message history: $data');
+      if(data is List<dynamic>) {
+        calledBack(data);
+      }
+    });
+  }
+    
+
   void dispose() {
     socket.dispose();
   }

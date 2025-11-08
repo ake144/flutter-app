@@ -28,12 +28,28 @@ class _ChatPageState extends State<ChatPage> {
 
     Future.delayed(const Duration(seconds: 1), () {
       socketManager.joinCourse(widget.courseId);
+
+      socketManager.listenToMessageHistory((List<dynamic> data) {
+        setState(() {
+          messages.clear();
+          for(var msg in data){
+            messages.add('${msg['userId']}: ${msg['message']}');
+          }
+        });
+
+      });
+       
+       socketManager.listenToMessages((data) {
+        setState(() {
+         messages.add('${data['userId']}: ${data['message']}');
+        });
+      });
     });
 
 
     socketManager.listenToMessages((data) {
       setState(() {
-       messages.add('${data['userId']}: ${data['messsage']}');
+       messages.add('${data['userId']}: ${data['message']}');
       });
     });
   }
@@ -47,7 +63,7 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage() {
     if (_controller.text.isNotEmpty) {
       socketManager.sendMessage(widget.courseId, widget.userId, _controller.text);
-      
+
       _controller.clear();
     }
   }
