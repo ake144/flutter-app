@@ -40,7 +40,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/chat',
       name: 'chat-screen',
-      builder: (context, state) => const ChatPage(),
+      builder: (context, state) => const ChatPage(courseId: 1, userId: 1),
     ),
     GoRoute(
       path: '/course/:id',

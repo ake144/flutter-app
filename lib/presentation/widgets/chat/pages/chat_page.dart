@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/core/socket_manager.dart';
+import 'package:my_flutter_app/presentation/widgets/nav_bar.dart';
 
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
-  
- 
+  final int courseId;
+  final int userId;
+
+  const ChatPage({super.key, 
+  required this.courseId,
+   required this.userId
+   });
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -21,9 +26,14 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     socketManager.connect();
 
+    Future.delayed(const Duration(seconds: 1), () {
+      socketManager.joinCourse(widget.courseId);
+    });
+
+
     socketManager.listenToMessages((data) {
       setState(() {
-        messages.add(data.toString());
+       messages.add('${data['userId']}: ${data['messsage']}');
       });
     });
   }
@@ -36,7 +46,8 @@ class _ChatPageState extends State<ChatPage> {
 
   void sendMessage() {
     if (_controller.text.isNotEmpty) {
-      socketManager.sendMessage({'text': _controller.text});
+      socketManager.sendMessage(widget.courseId, widget.userId, _controller.text);
+      
       _controller.clear();
     }
   }
@@ -45,6 +56,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Course Chat')),
+      drawer: NavBar(),
+
       body: Column(
         children: [
           Expanded(

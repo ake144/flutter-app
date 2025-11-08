@@ -25,12 +25,35 @@ static String get backendUrl => dotenv.env['API_URL'] ?? 'http://localhost:3000'
     socket.onDisconnect((_) => print('❌ Disconnected from WebSocket'));
   }
 
-  void sendMessage(Map<String, dynamic> message) {
-    socket.emit('message', message);
+
+  void joinCourse(int courseId){
+    socket.emit('joinCourse', {'courseId': courseId});
+
+    print('Joined course room: $courseId');
   }
 
-  void listenToMessages(Function(dynamic) callback) {
-    socket.on('message', callback);
+  void leaveCourse(int courseId) {
+    socket.emit('leaveCourse', {'courseId': courseId});
+
+    print('Left course room: $courseId');
+  }
+
+
+  void sendMessage(int courseId, int userId, String message){
+    socket.emit('sendMessage', {
+      'courseId': courseId,
+      'message': message,
+      'userId': userId,
+    });
+
+    print('Sent message: $message to course: $courseId from user: $userId');
+  }
+
+   void listenToMessages(Function(dynamic data) calledBack) {
+    socket.on('newMessage', (data) {
+      print('Received message: $data');
+      calledBack(data);
+    });
   }
 
   void dispose() {
