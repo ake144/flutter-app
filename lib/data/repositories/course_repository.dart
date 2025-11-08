@@ -12,11 +12,11 @@ import 'package:http/http.dart' as http;
     static  final backendUrl = dotenv.env['API_URL'] ?? 'http://localhost:3000';
 
 
-   static Future<Map<String, dynamic>> fetchCourseDetails(String courseId) async {
+   static Future<Map<String, dynamic>> fetchCourseDetails(String courseId, String token) async {
 
         final uri = Uri.parse('$backendUrl/course/$courseId');
         final headers = <String, String>{
-          'Authorization': 'Bearer ${dotenv.env['API_TOKEN'] ?? ''}',
+          'Authorization': 'Bearer $token',
         };
 
         try {
@@ -35,10 +35,10 @@ import 'package:http/http.dart' as http;
         }
     }
 
-  static Future<List<dynamic>> fetchAllCourses() async {
+  static Future<List<dynamic>> fetchAllCourses(String token) async {
        final uri = Uri.parse('$backendUrl/course');
       final headers = <String, String>{
-          'Authorization': 'Bearer ${dotenv.env['API_TOKEN'] ?? ''}',
+          'Authorization': 'Bearer $token',
         };
         try {
             final response = await http.get(uri, headers: headers);

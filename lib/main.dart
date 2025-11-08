@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_event.dart';
 import 'package:my_flutter_app/presentation/bloc/auth_bloc/auth_state.dart';
+import 'package:my_flutter_app/presentation/bloc/course/course_bloc.dart';
 import 'package:my_flutter_app/presentation/routes/app_routes.dart';
 import 'package:my_flutter_app/presentation/screens/auth/login_screen.dart';
 import 'package:my_flutter_app/presentation/screens/home/home_screen.dart';
@@ -47,11 +48,14 @@ class MyApp extends StatelessWidget {
         // } else 
         if (state is AuthState && state.isAuthenticated) {
           // If logged in → go to Home
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: 'E-Learning App',
-            theme: ThemeData(primarySwatch: Colors.indigo),
-            routerConfig: appRouter,
+          return BlocProvider(
+            create: (context) => CourseBloc(context.read<AuthBloc>()),
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              title: 'E-Learning App',
+              theme: ThemeData(primarySwatch: Colors.indigo),
+              routerConfig: appRouter,
+            ),
           );
         } else {
           // Not logged in → go to Login

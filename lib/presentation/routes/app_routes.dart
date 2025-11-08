@@ -6,6 +6,7 @@ import 'package:my_flutter_app/presentation/screens/auth/signup_screen.dart';
 import 'package:my_flutter_app/presentation/screens/course/course_detail_screen.dart';
 import 'package:my_flutter_app/presentation/screens/home/course_list_tile.dart';
 import 'package:my_flutter_app/presentation/screens/home/home_screen.dart';
+import 'package:my_flutter_app/presentation/screens/profile/profile_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -42,6 +43,10 @@ final appRouter = GoRouter(
         final id = state.pathParameters['id']!;
         return CourseDetailScreen(courseId: id);
       },
+    ),
+    GoRoute(path: "/profile", 
+        name: "profile-screen",
+        builder: (context, state) => const ProfileScreen(),
     ),
   ],
 );
