@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -62,13 +63,14 @@ static Future<void> SignUpUser(BuildContext context,  String name, String email,
 
          if (response.statusCode == 200) {
            // Sign up successful
-           final data = jsonDecode(response.body);
+          //  final data = jsonDecode(response.body);
+           final data = await compute(jsonDecode, response.body);
            print('Sign up successful: $data');
            context.pushReplacementNamed('/login');
            // Handle successful sign up (e.g., navigate to another screen)
          } else {
            // Sign up failed
-           final error = jsonDecode(response.body);
+           final error = await compute(jsonDecode, response.body);
            print('Sign up failed: $error');
            // Handle sign up error (e.g., show error message)
          }

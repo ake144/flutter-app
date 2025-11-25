@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -22,7 +23,7 @@ import 'package:http/http.dart' as http;
         try {
             final response = await http.get(uri, headers: headers);
             if (response.statusCode == 200) {
-                final data = jsonDecode(response.body) as Map<String, dynamic>;
+                final data = await compute(jsonDecode, response.body) as Map<String, dynamic>;
                 print('Course details fetched successfully: $data');
                 return data;
             } else {
