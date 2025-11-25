@@ -19,9 +19,9 @@ void main() async {
    WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase before the app starts
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
    await dotenv.load(fileName: ".env");
 
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         //     ),
         //   );
         // } else 
-        if (state is AuthState && state.isAuthenticated) {
+        if (state.isAuthenticated) {
           // If logged in → go to Home
           return BlocProvider(
             create: (context) => CourseBloc(context.read<AuthBloc>()),
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'E-Learning App',
               theme: ThemeData(primarySwatch: Colors.indigo),
-              routerConfig: appRouter,
+              routerConfig: createAppRouter(context.read<AuthBloc>()),
             ),
           );
         } else {
